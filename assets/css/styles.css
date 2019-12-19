@@ -1,16 +1,45 @@
-Body{
-	Align-Items:		Center;
-	Display:			Flex;
-	Min-Height:			100vh;
-	Justify-Content:	Center;
-	Margin:				0;
+Body {
+  Align-Items: Center;
+  Display: Flex;
+  Min-Height: 100vh;
+  Justify-Content: Center;
+  Margin: 0;
 }
 
-Loading{
-	Color:				#333333;
-	Transform:			scale(1.5);
+Loading {
+  Color: #333333;
+  Transform: scale(1.5);
 }
-Loading > I{
-	Color:				#0096FA;
-	Margin-Right:		5px;
+
+Loading>I {
+  Color: #0096FA;
+  Margin-Right: 5px;
+}
+
+p {
+  font-family: Courier New, Courier, monospace;
+}
+
+.card {
+  display: flex;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.surgery-case {
+  background-color: #AFDCFA;
+}
+
+.clinical-case {
+  background-color: rgb(255, 211, 169);
+}
+
+.label-div {
+  margin-right: 50px;
+  margin-left: 20px;
+}
+
+.label-div p {
+  font-weight: 900;
 }
