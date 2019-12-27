@@ -16,30 +16,95 @@ Loading>I {
   Margin-Right: 5px;
 }
 
+#cases-div {
+  display: none;
+}
+
+h1,
 p {
   font-family: Courier New, Courier, monospace;
 }
 
-.card {
+p {
+  margin: 4px;
+}
+
+h1 {
+  padding-left: 30px;
+  font-weight: 500;
+}
+
+.initial-div {
   display: flex;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
 }
 
 .surgery-case {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
   background-color: #AFDCFA;
 }
 
 .clinical-case {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
   background-color: rgb(255, 211, 169);
 }
 
 .label-div {
-  margin-right: 50px;
+  margin-right: 0;
   margin-left: 20px;
+  width: 180px;
 }
 
 .label-div p {
   font-weight: 900;
+}
+
+.detail_arrow {
+  font-size: 25px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.rotated-arrow {
+  transform: rotate(180deg);
+}
+
+.expansive-div {
+  border-radius: 7px;
+  margin-top: 20px;
+}
+
+.expansive-sub-div {
+  display: none;
+}
+
+.expansive-wrapper {
+  display: flex;
+  padding: 0 5%;
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .expansive-wrapper {
+    flex-direction: column;
+    padding: 32px 0 0 0;
+  }
+}
+
+.patient-div,
+.procedure-div {
+  display: flex;
+}
+
+.patient-div {
+  margin-right: 10%;
+}
+
+.procedure-div {
+  padding: 22px 0 32px 0;
 }

@@ -1,55 +1,107 @@
-const Http = new XMLHttpRequest();
-const url = 'https://dalazaro.github.io/ds-json-example/example.json';
-Http.open('GET', url);
-Http.send();
+$.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
+  dataType: 'json',
+  success: function (data) {
+    console.log('jQuery Data', data);
+    $('#loading-signal').hide();
+    var $cases = data.cases;
+    var $casesDiv = $('#cases-div');
+    $casesDiv.show();
 
-Http.onreadystatechange = (e) => {
-  let loadingSignal = document.querySelector('#loading-signal');
-  loadingSignal.style.display = 'none';
+    $.each($cases, function (i, c) {
+      // Initial info displayed
+      var $card = $('<div></div>');
+      var $caseType = c.details.case_type;
+      var $caseTitle = (c.details.case_title);
+      var $dob = 'Date of Birth:';
+      var $dobData = moment((c.patient.dob).toString()).format('MM/DD/YYYY');
+      var $caseNotes = 'Case Notes:';
+      var $caseNotesData = c.details.notes;
 
-  let casesDiv = document.getElementById('cases-div');
-  let data = JSON.parse(Http.responseText);
-  const cases = data.cases;
+      // Place initial infor in respective divs
+      var $initialDiv = $('<div class="initial-div"></div>')
+      var $labelDiv = '<div class="label-div"><p>' + $caseType + '</p><p>' + $dob + '</p><p>' + $caseNotes + '</p></div>';
+      var $infoDiv = '<div><p>' + $caseTitle + '</p><p>' + $dobData + '</p><p>' + $caseNotesData + '</p></div>';
+      var $detailArrow = $('<i class="fas fa-angle-down detail_arrow"></i>');
 
-  for (let i = 0; i < cases.length; i++) {
-    const card = document.createElement('div');
-    const labelDiv = document.createElement('div');
-    const infoDiv = document.createElement('div');
-    const case_type = document.createElement('p');
-    const case_title = document.createElement('p');
-    const dob = document.createElement('p');
-    const dobData = document.createElement('p');
-    const caseNotes = document.createElement('p');
-    const caseNotesData = document.createElement('p');
+      $initialDiv.append($labelDiv);
+      $initialDiv.append($infoDiv);
 
-    const readableDate = moment(cases[i].patient.dob).format('MM/DD/YYYY');
+      // When detail arrow is clicked... 
+      // Expanded info displayed when card is expanded
+      var $caseId = c.case_id;
+      var $patientName = c.patient.name.last + ', ' + c.patient.name.first;
+      var $gender = c.patient.gender;
+      var $mrn = c.patient.mrn;
+      var $startTime = moment(c.details.time.start).format('YYYY/MM/DD HH:mm:ss a');
+      var $endTime = moment(c.details.time.end).format('YYYY/MM/DD HH:mm:ss a');
+      var $physicianName = c.details.physician;
 
-    case_type.textContent = cases[i].details.case_type;
-    case_title.textContent = cases[i].details.case_title;
-    dob.textContent = 'Date of Birth:';
-    dobData.textContent = readableDate;
-    caseNotes.textContent = 'Case Notes:';
-    caseNotesData.textContent = cases[i].details.notes;
+      console.log(c.details.time.start);
+      console.log(moment(c.details.time.start).format('YYYY/MM/DD'));
 
-    if (case_type.textContent === 'Surgery') {
-      card.classList.add('surgery-case');
-    } else if (case_type.textContent === 'Clinical') {
-      card.classList.add('clinical-case');
-    }
 
-    card.classList.add('card');
-    labelDiv.setAttribute('class', 'label-div');
 
-    labelDiv.appendChild(case_type);
-    infoDiv.appendChild(case_title);
-    labelDiv.appendChild(dob);
-    infoDiv.appendChild(dobData);
-    labelDiv.appendChild(caseNotes);
-    infoDiv.appendChild(caseNotesData);
+      var $patientInfo = $('<div class="patient-div"><div class="label-div"><p> Case ID: </p><p> Patient Name: </p><p> Gender: </p><p> Medical Record #:</p></div><div class="info-div"><p>' + $caseId + '</p><p>' + $patientName + '</p><p>' + $gender + '</p><p> ' + $mrn + ' </p></div></div>');
+      var $procedureInfo = $('<div class="procedure-div"><div class="label-div"><p> Start Time: </p><p> End Time: </p><p> Physician Name: </p></div><div class="info-div"><p>' + $startTime + '</p><p>' + $endTime + '</p><p>' + $physicianName + '</p></div></div>');
 
-    card.appendChild(labelDiv);
-    card.appendChild(infoDiv);
 
-    casesDiv.appendChild(card);
+
+      var $expansiveDiv = $('<div class="expansive-div"></div>');
+      var $expansiveSubDiv = $('<div class="expansive-sub-div"></div>');
+      // Expansive Wrapper solves a glitch when display goes from none to flex.
+      var $expansiveWrapper = $('<div class="expansive-wrapper"></div>');
+      $expansiveDiv.append($detailArrow);
+      $expansiveDiv.append($expansiveSubDiv);
+
+      $expansiveWrapper.append($patientInfo);
+      $expansiveWrapper.append($procedureInfo);
+
+
+      $expansiveSubDiv.append($expansiveWrapper);
+
+
+      $card.append($initialDiv);
+      $card.append($expansiveDiv);
+      $card.append($expansiveDiv);
+
+      $casesDiv.append($card);
+
+      if ($caseType === 'Surgery') {
+        $card.attr('class', 'surgery-case');
+      } else if ($caseType === 'Clinical') {
+        $card.attr('class', 'clinical-case');
+      }
+
+      // When detail arrow is hovered...
+      $detailArrow.hover(function () {
+        if ($caseType === 'Surgery') {
+          $(this).css('background-color', 'rgb(197, 230, 252)');
+        } else if ($caseType === 'Clinical') {
+          $(this).css('background-color', 'rgb(252, 233, 216)');
+        }
+      }, function () {
+        $(this).css('background-color', 'transparent');
+      });
+
+      // When detail arrow is clicked...
+      $detailArrow.click(function (e) {
+        $(this).toggleClass('rotated-arrow');
+        var $thisInfo = $(this).next();
+        var $thisParent = $(this).parent();
+        $thisInfo.slideToggle('slow', function () {
+          if (!$(this).is(':visible')) $thisParent.css('background-color', 'transparent');
+        });
+
+        if ($caseType === 'Surgery') {
+          $thisParent.css('background-color', 'rgb(197, 230, 252)');
+        } else if ($caseType === 'Clinical') {
+          $thisParent.css('background-color', 'rgb(252, 233, 216)');
+        }
+
+      })
+    });
+  },
+  error: function (errorMessage) {
+    $('p').append('Error: ' + errorMessage)
   }
-};
+});
