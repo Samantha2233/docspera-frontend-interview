@@ -20,22 +20,18 @@ Loading>I {
   display: none;
 }
 
-h1,
-p {
-  font-family: Courier New, Courier, monospace;
+table {
+  padding: 10px;
 }
 
-p {
-  margin: 4px;
+h1,
+td {
+  font-family: Courier New, Courier, monospace;
 }
 
 h1 {
   padding-left: 30px;
   font-weight: 500;
-}
-
-.initial-div {
-  display: flex;
 }
 
 .surgery-case {
@@ -52,14 +48,9 @@ h1 {
   background-color: rgb(255, 211, 169);
 }
 
-.label-div {
-  margin-right: 0;
-  margin-left: 20px;
-  width: 180px;
-}
-
-.label-div p {
+.label {
   font-weight: 900;
+  font-family: Courier New, Courier, monospace;
 }
 
 .detail_arrow {
@@ -85,8 +76,11 @@ h1 {
 
 .expansive-wrapper {
   display: flex;
-  padding: 0 5%;
   width: 100%;
+}
+
+.expansive-wrapper table:first-child {
+  width: 375px;
 }
 
 @media screen and (max-width: 900px) {
