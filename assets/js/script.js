@@ -34,7 +34,7 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
       var $physicianName = c.details.physician;
 
 
-      var $patientTable = $('<table><tr><td><span class="label"> Case ID: </span>' + $caseId + '</td></tr><tr><td><span class="label"> Patient Name: </span>' + $patientName + '</td></tr><tr><td><span class="label"> Gender: </span>' + $gender + '</td></tr><tr><td><span class="label"> Medical Record #: ' + $mrn + '</span></td></tr></table>');
+      var $patientTable = $('<table><tr><td><span class="label"> Case ID: </span>' + $caseId + '</td></tr><tr><td><span class="label"> Patient Name: </span>' + $patientName + '</td></tr><tr><td><span class="label"> Gender: </span>' + $gender + '</td></tr><tr><td><span class="label"> Medical Record #: </span>' + $mrn + '</td></tr></table>');
       var $procedureTable = $('<table><tr><td><span class="label"> Start: </span>' + $start + '</td></tr><tr><td><span class="label"> End: </span>' + $end + '</td></tr><tr><td><span class="label"> Physician Name: </span>' + $physicianName + '</td></tr></table>');
 
       var $expansiveDiv = $('<div class="expansive-div"></div>');
