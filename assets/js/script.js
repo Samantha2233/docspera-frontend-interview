@@ -15,16 +15,12 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
       var $dob = moment((c.patient.dob).toString()).format('MM/DD/YYYY');
       var $caseNotes = c.details.notes;
 
-      // Create Initial Div & Table info
       var $initialDiv = $('<div class="initial-div"></div>')
       var $initialTable = $('<table><tr><td><span class="label">' + $caseType + ': </span>' + $caseTitle + '</td></tr><tr><td><span class="label">Date of Birth: </span>' + $dob + '</td></tr><tr><td><span class="label">Case Notes: </span>' + $caseNotes + '</td></tr></table>')
       $initialDiv.append($initialTable);
 
-
-      // Create detail arrow 
+      // Detail arrow & More Info...
       var $detailArrow = $('<i class="fas fa-angle-down detail_arrow"></i>');
-      // When detail arrow is clicked... 
-      // Show more info
       var $caseId = c.case_id;
       var $patientName = c.patient.name.last + ', ' + c.patient.name.first;
       var $gender = c.patient.gender;
@@ -33,36 +29,30 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
       var $end = moment(c.details.time.end).format('YYYY/MM/DD HH:mm:ss a');
       var $physicianName = c.details.physician;
 
-
       var $patientTable = $('<table><tr><td><span class="label"> Case ID: </span>' + $caseId + '</td></tr><tr><td><span class="label"> Patient Name: </span>' + $patientName + '</td></tr><tr><td><span class="label"> Gender: </span>' + $gender + '</td></tr><tr><td><span class="label"> Medical Record #: </span>' + $mrn + '</td></tr></table>');
       var $procedureTable = $('<table><tr><td><span class="label"> Start: </span>' + $start + '</td></tr><tr><td><span class="label"> End: </span>' + $end + '</td></tr><tr><td><span class="label"> Physician Name: </span>' + $physicianName + '</td></tr></table>');
 
       var $expansiveDiv = $('<div class="expansive-div"></div>');
       var $expansiveSubDiv = $('<div class="expansive-sub-div"></div>');
-      // Expansive Wrapper solves a glitch when display goes from none to flex.
       var $expansiveWrapper = $('<div class="expansive-wrapper"></div>');
+
       $expansiveDiv.append($detailArrow);
       $expansiveDiv.append($expansiveSubDiv);
-
       $expansiveWrapper.append($patientTable);
       $expansiveWrapper.append($procedureTable);
-
-
       $expansiveSubDiv.append($expansiveWrapper);
-
-
       $card.append($initialDiv);
       $card.append($expansiveDiv);
-
       $casesDiv.append($card);
 
+      // Color case types
       if ($caseType === 'Surgery') {
         $card.attr('class', 'surgery-case');
       } else if ($caseType === 'Clinical') {
         $card.attr('class', 'clinical-case');
       }
 
-      // When detail arrow is hovered...
+      // Events
       $detailArrow.hover(function () {
         if ($caseType === 'Surgery') {
           $(this).css('background-color', 'rgb(197, 230, 252)');
@@ -73,7 +63,6 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
         $(this).css('background-color', 'transparent');
       });
 
-      // When detail arrow is clicked...
       $detailArrow.click(function (e) {
         $(this).toggleClass('rotated-arrow');
         var $thisInfo = $(this).next();
@@ -81,7 +70,6 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
         $thisInfo.slideToggle('slow', function () {
           if (!$(this).is(':visible')) $thisParent.css('background-color', 'transparent');
         });
-
         if ($caseType === 'Surgery') {
           $thisParent.css('background-color', 'rgb(197, 230, 252)');
         } else if ($caseType === 'Clinical') {
