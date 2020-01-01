@@ -1,13 +1,14 @@
 $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
   dataType: 'json',
   success: function (data) {
-    console.log('jQuery Data', data);
     $('#loading-signal').hide();
-    var $cases = data.cases;
+    var cases = data.cases;
     var $casesDiv = $('#cases-div');
     $casesDiv.show();
 
-    $.each($cases, function (i, c) {
+    $('#cases-hdr p').text(cases.length + ' Total');
+
+    $.each(cases, function (i, c) {
       // Initial info displayed
       var $card = $('<div></div>');
       var $caseType = c.details.case_type;
@@ -75,8 +76,7 @@ $.ajax('https://dalazaro.github.io/ds-json-example/example.json', {
         } else if ($caseType === 'Clinical') {
           $thisParent.css('background-color', 'rgb(252, 233, 216)');
         }
-
-      })
+      });
     });
   },
   error: function (errorMessage) {

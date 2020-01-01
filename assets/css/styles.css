@@ -25,13 +25,20 @@ table {
 }
 
 h1,
-td {
+td,
+p {
   font-family: Courier New, Courier, monospace;
 }
 
 h1 {
-  padding-left: 30px;
   font-weight: 500;
+}
+
+#cases-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
 }
 
 .surgery-case {
@@ -83,7 +90,13 @@ h1 {
   width: 375px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 750px) {
+  .expansive-wrapper table:first-child {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 700px) {
   .expansive-wrapper {
     flex-direction: column;
   }
